@@ -1,0 +1,21 @@
+{
+  "name": "angularjs-auth0",
+  "version": "1.0.0",
+  "description": "angularjs authentifikasi menggunakan auth0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "priyagung yogi",
+  "license": "ISC",
+  "dependencies": {
+    "@uirouter/angularjs": "^1.0.28",
+    "angular": "^1.8.2",
+    "angular-auth0": "^3.0.6",
+    "auth0-js": "^9.14.0",
+    "bootstrap": "^4.5.3",
+    "express": "^4.17.1",
+    "http-server": "^0.12.3"
+  }
+}
