@@ -1,14 +1,25 @@
 (function() {
 
     angular
-        .module('app', ['auth0.auth0', 'ui.router'])
+        .module('app', ['auth0.auth0', 'ui.router','angular-jwt'])
         .config(config);
 
         config.$inject = [
-            '$stateProvider', '$locationProvider', '$urlRouterProvider', 'angularAuth0Provider'
+            '$stateProvider',
+            '$locationProvider', 
+            '$urlRouterProvider', 
+            '$httpProvider',
+            'angularAuth0Provider',
+            'jwtOptionsProvider'
         ]
 
-        function config($stateProvider, $locationProvider, $urlRouterProvider, angularAuth0Provider) {
+        function config($stateProvider,
+                        $locationProvider, 
+                        $urlRouterProvider, 
+                        $httpProvider,
+                        angularAuth0Provider,
+                        jwtOptionsProvider
+                        ) {
             $stateProvider.state('home', {
                 url: '/',
                 controller: 'HomeController',
@@ -29,12 +40,23 @@
             });
             
             angularAuth0Provider.init({
-                clientID : 'pgPMEptwv3P4qjaIZ6aSzczOch0glJ5S',
-                domain: 'dev-yogiex.us.auth0.com',
-                responseType: 'token id_token',
-                redirectUri: 'http://localhost:3000/callback',
-                scope: 'openid profile'
+                clientID : '', //diisi dengan clientID
+                domain: '', // diisi dengan domain pada auth0
+                responseType: '', // diisi dengan responseType 
+                redirectUri: '', // diisi dengan enpoint callback
+                scope: '', // diisi dengan scope openid dan profile
+                audience: '' // diisi dengan endpoint api yang dibuat pada auth0
             })
+
+            jwtOptionsProvider.config({
+                tokenGetter: function(){
+                    return localStorage.getItem('access_token')
+                },
+                whiteListedDomains: ['localhost']
+            });
+
+            $httpProvider.interceptors.push('jwtInterceptor')
+
             $urlRouterProvider.otherwise('/');
 
             $locationProvider.hashPrefix('');
